@@ -415,11 +415,43 @@ print("/------------------------------------/")
 
 # MODEL DEPLOYMENT
 
-# Preidicion de quien es hombre y quien es mujer
+# Preidicion de CUANTOS familiares tienen en el barco
 # Rompemos el dataframe para  el set entrenamiento (4/5 de datos del dataframe) y  set pruebas (pass set) (1/5 de datos del dataframe)
 # y quitamos la variable Survived qque es la que queremos checar
 X_train, X_test, Y_train, Y_test = train_test_split(titanic_data_dmy.drop(['SibSp'], axis= 1), # Valores en X
                                                     titanic_data_dmy['SibSp'], test_size = 0.2, # Valores en Y
+                                                    random_state= 200) # seed de random para tener los mismos resultados
+
+
+#------------------------------------------------------------------------------#
+#                           SECCION SIN USO LIBRERIA                           #
+#------------------------------------------------------------------------------#
+# Llamando al modelo
+# Model training
+model = LogitRegression(learning_rate = 0.01, epochs = 999)  # Si Funciona pero necesita muchas MUCHAS Interaciones como tambien el
+model.fit(X_train, Y_train)  # tarda su rato dependiendo las epocas y el ratio de apredizaje que se le ponga
+
+# Prediction on test set
+Y_pred = model.predict(X_test)
+
+print(f'Prediccion Modelo realizado de la tercera prueba:\n {Y_pred}')  # Checamos por los primeros 5 valores que usaramos como predictores
+print("/------------------------------------/")
+
+# Reporte de Clasificacion  sin cross validation del modelo generado
+print(f'Reporte de clasificacion sin crossvalidation de la tercera prueba :\n {classification_report(Y_test, Y_pred)}')
+print("/------------------------------------/")
+
+#------------------------------------------------------------------------------#
+#                                CUARTA PRUEBA                                #
+#------------------------------------------------------------------------------#
+
+# MODEL DEPLOYMENT
+
+# Preidicion de quien salio del puerto  S (S = Southampton)
+# Rompemos el dataframe para  el set entrenamiento (4/5 de datos del dataframe) y  set pruebas (pass set) (1/5 de datos del dataframe)
+# y quitamos la variable Survived qque es la que queremos checar
+X_train, X_test, Y_train, Y_test = train_test_split(titanic_data_dmy.drop(['S'], axis= 1), # Valores en X
+                                                    titanic_data_dmy['S'], test_size = 0.2, # Valores en Y
                                                     random_state= 200) # seed de random para tener los mismos resultados
 
 
