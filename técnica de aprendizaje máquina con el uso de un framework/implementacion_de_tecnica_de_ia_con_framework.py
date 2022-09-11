@@ -105,8 +105,8 @@ Embarked = Port of Embarkation ( C = Cherbour ,France;
 
 # para preparar los datos primero necetamos checar si la variable tarjet es binaria
 # Queremos checar, probar y predecir la sobrevencia , pero primero hay que checar si es binario
-#sb.countplot(x = "Survived", data = titanic_training, palette = 'hls')
-#plt.show() # vemos la grafica de sobreviencia denotando que si es binaria la variable
+sb.countplot(x = "Survived", data = titanic_training, palette = 'hls')
+plt.show() # vemos la grafica de sobreviencia denotando que si es binaria la variable
 
 # Checamos por valores perdidos
 # Siempre hay que hacerlo (en este caso si hay valores perdidos , lo podemos checar desde la info del dataset)
@@ -148,8 +148,8 @@ print("/------------------------------------/")
 # Agregamos los valores desaparecidos con aproximacion
 
 # Primero checamos la distribuccion de los datos entre Parch y Age
-#sb.boxplot(x = "Parch",y= "Age", data = titanic_data, palette = 'hls')
-#plt.show() # podemos denotar que hay relaciones entre ambas variables, es decir, podemos ver  que puede haber dos relativos por bote
+sb.boxplot(x = "Parch",y= "Age", data = titanic_data, palette = 'hls')
+plt.show() # podemos denotar que hay relaciones entre ambas variables, es decir, podemos ver  que puede haber dos relativos por bote
            # (mientras mas edad mauor cantidad hasta llegar poren encima de 40 años)
 
 # Aproximacion de las edades de los pasajeros en base al numero de padres o hijos que hay en el bote
@@ -263,9 +263,9 @@ print("/------------------------------------/")
 
 # Checando por independecias entre atributos
 
-#plt.figure()
-#sb.heatmap(titanic_data_dmy.corr()) # corelacionamos los datos
-#plt.show() # Lo que nos dice la grafica que esu si tenemos corelacion cerca a uno o uno negativos, significa que
+plt.figure()
+sb.heatmap(titanic_data_dmy.corr()) # corelacionamos los datos
+plt.show() # Lo que nos dice la grafica que esu si tenemos corelacion cerca a uno o uno negativos, significa que
            # se obtuvo una fuerte relacion lineal entre el par de variable
            # regresion logistica asume que los atributos debe ser independiente del uno con el otro
            # lo cual no podemos tener esto
@@ -316,13 +316,13 @@ print("/------------------------------------/")
 #modelo con libreria
 # Realizamos este modelo para ver la  realizacion del modelo generado
 # para la actividad como tambien la precision de ambos modelos
-#model1 = LogisticRegression()
-#model1.fit( X_train, Y_train)
-#Y_pred1 = model1.predict( X_test )
-#print(f'Prediccion con Libreria :\n {Y_pred1}')  # con facilidad podemos decir que esta es mas rapida
+model1 = LogisticRegression()
+model1.fit( X_train, Y_train)
+Y_pred1 = model1.predict( X_test )
+print(f'Prediccion con Libreria primera prueba:\n {Y_pred1}')  # con facilidad podemos decir que esta es mas rapida
 print("/------------------------------------/")
 # Reporte de Clasificacion  sin cross validation del modelo con libreria
-#print(f'Reporte de clasificacion  :\n {classification_report(Y_test, Y_pred1)}') # vemos 72 de presicion de predicion que si decente pero puede mejorar
+print(f'Reporte de clasificacion primera prueba:\n {classification_report(Y_test, Y_pred1)}') # vemos 72 de presicion de predicion que si decente pero puede mejorar
 print("/------------------------------------/")
 
 
@@ -425,27 +425,40 @@ X_train, X_test, Y_train, Y_test = train_test_split(titanic_data_dmy.drop(['male
 model1 = LogisticRegression()
 model1.fit( X_train, Y_train)
 Y_pred1 = model1.predict( X_test )
-print(f'Prediccion con Libreria :\n {Y_pred1}')  # con facilidad podemos decir que esta es mas rapida
+print(f'Prediccion con Libreria segunda prueba:\n {Y_pred1}')  # con facilidad podemos decir que esta es mas rapida
 print("/------------------------------------/")
 # Reporte de Clasificacion  sin cross validation del modelo con libreria
-print(f'Reporte de clasificacion  :\n {classification_report(Y_test, Y_pred1)}')
+print(f'Reporte de clasificacion segunda prueba :\n {classification_report(Y_test, Y_pred1)}')
 print("/------------------------------------/")
+
 
 
 #------------------------------------------------------------------------------#
-#                           SECCION SIN USO LIBRERIA                           #
+#                                TERCERA PRUEBA                                #
 #------------------------------------------------------------------------------#
-# Llamando al modelo
-# Model training
-model = LogitRegression(learning_rate = 0.01, epochs = 999)  # Si Funciona pero necesita muchas MUCHAS Interaciones como tambien el
-model.fit(X_train, Y_train)  # tarda su rato dependiendo las epocas y el ratio de apredizaje que se le ponga
 
-# Prediction on test set
-Y_pred = model.predict(X_test)
+# MODEL DEPLOYMENT
 
-print(f'Prediccion Modelo realizado:\n {Y_pred}')  # Checamos por los primeros 5 valores que usaramos como predictores
+# Preidicion de quien es hombre y quien es mujer
+# Rompemos el dataframe para  el set entrenamiento (4/5 de datos del dataframe) y  set pruebas (pass set) (1/5 de datos del dataframe)
+# y quitamos la variable Survived qque es la que queremos checar
+X_train, X_test, Y_train, Y_test = train_test_split(titanic_data_dmy.drop(['SibSp'], axis= 1), # Valores en X
+                                                    titanic_data_dmy['SibSp'], test_size = 0.2, # Valores en Y
+                                                    random_state= 200) # seed de random para tener los mismos resultados
+
+#------------------------------------------------------------------------------#
+#                           SECCION CON USO LIBRERIA                           #
+#------------------------------------------------------------------------------#
+#modelo con libreria
+# Realizamos este modelo para ver la  realizacion del modelo generado
+# para la actividad como tambien la precision de ambos modelos
+model1 = LogisticRegression()
+model1.fit( X_train, Y_train)
+Y_pred1 = model1.predict( X_test )
+print(f'Prediccion con Libreria tercera prueba :\n {Y_pred1}')  # con facilidad podemos decir que esta es mas rapida
+print("/------------------------------------/")
+# Reporte de Clasificacion  sin cross validation del modelo con libreria
+print(f'Reporte de clasificacion  tercera prueba:\n {classification_report(Y_test, Y_pred1)}')
 print("/------------------------------------/")
 
-# Reporte de Clasificacion  sin cross validation del modelo generado
-print(f'Reporte de clasificacion sin crossvalidation :\n {classification_report(Y_test, Y_pred)}')
-print("/------------------------------------/")
+
