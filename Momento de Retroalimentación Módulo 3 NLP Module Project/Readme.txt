@@ -31,7 +31,7 @@ The links of the exercises performed on Colab website are the following:
 
 
 * [NLP Activity 3](https://colab.research.google.com/drive/1PJo2oprQouYvKGkd09c6ztz22rl1mR_0?usp=sharing)
-
+* [NLP Activity 3 Dataset](https://drive.google.com/drive/folders/1pwgr0sX75yne9hQE_6ySqIDRsLk5OBSH?usp=sharing)
 
 In case you need to run the codes made in colab, 
 the only thing necessary for its functionality 
